@@ -11,36 +11,39 @@
 	<title>MFG Data</title>
 </head>
 
-<body>
-	<h1 class="head-title text-uppercase" id="header"> </h1>
-	<h3 id="containerNums"> Container Data for </h3>
+<body class="mfg-body">
+	<div class="container">
+		<h1 class="head-title text-uppercase" id="header"> </h1>
+		
+		<div class="main-container">
+			<h3 id="containerNums"> Container Data for </h3>
 
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="input-group">
-				<span class="input-group-btn">
-        <button id="searchContainer" class="btn btn-default" type="button">Go!</button>
-      </span>
-				<input id="containerID" type="text" class="form-control" placeholder="Search for...">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="input-group">
+						<span class="input-group-btn">
+						<button id="searchContainer" class="btn btn-default" type="button">Go!</button>
+					</span>
+						<input id="containerID" type="text" class="form-control" placeholder="Search for container number...">
+					</div>
+					<!-- /input-group -->
+				</div>
+				<!-- /.col-lg-6 -->
 			</div>
-			<!-- /input-group -->
-		</div>
-		<!-- /.col-lg-6 -->
-	</div>
-	<table class="table">
-		<tr class="info">
-			<td> ID </td>
-			<td> Bill of Lading </td>
-			<td> Status </td>
-		</tr>
-		<tr>
-			<td id="id"></td>
-			<td id="bill"></td>
-			<td id="status"></td>
-		</tr>
-		</div>
-	</table>
-	<h3 id="ladingNums"> Lading Data</h3>
+			<table class="table">
+				<tr class="info">
+					<td> Container Number </td>
+					<td> Bill of Lading </td>
+					<td> Shipping Status </td>
+				</tr>
+				<tr>
+					<td id="id"></td>
+					<td id="bill"></td>
+					<td id="status"></td>
+				</tr>
+				</div>
+			</table>
+			<h3 id="ladingNums"> Bill of Ladings</h3>
 
 	<div class="row">
 		<div class="col-lg-6">
@@ -50,21 +53,19 @@
       </span>
 				<input id="ladingID" type="text" class="form-control" placeholder="Search for...">
 			</div>
-			<!-- /input-group -->
+			<table class="table">
+				<tr class="info">
+					<td> Bill of Lading </td>
+					<td> Estimated Arrival </td>
+				</tr>
+				<tr class="success">
+					<td id="ladID"></td>
+					<td id="ladArrive"></td>
+				</tr>
+				</div>
+			</table>
 		</div>
-		<!-- /.col-lg-6 -->
 	</div>
-  <table class="table">
-		<tr class="info">
-			<td> ID </td>
-			<td> Estimated Arrival </td>
-		</tr>
-		<tr class="success">
-			<td id="ladID"></td>
-			<td id="ladArrive"></td>
-		</tr>
-		</div>
-	</table>
 </body>
 <script>
 	var containerDump, containerSubset, totalCount;
