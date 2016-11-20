@@ -16,17 +16,7 @@
 	<canvas width="50%" , height="25%" id="globalChart"></canvas>
 </body>
 <script>
-	var ports = ["Kobe",
-		"Nagoya",
-		"Hong%20Kong",
-		"Oakland",
-		"Tokyo",
-		"Laem%20Chabang",
-		"Vung%20Tau",
-		"Shimizu",
-		"Xiamen",
-		"Los%20Angeles"
-	];
+	var ports = ["Los%20Angeles", "Hong%20Kong"];
 	var hisEndpoint = "http://blackfin-hackathon.herokuapp.com";
 
 	$(document).ready(function() {
@@ -39,61 +29,90 @@
 		for (var i = 0; i < ports.length; i++) {
 			console.log("stuff")
 			$.ajax({
-				url: hisEndpoint + "/port/" + ports[i] + "/containers"
+				url: hisEndpoint + "/port/" + ports[0] + "/containers"
 			}).done(function(data) {
 				portData.push(data);
-				console.log(portData)
+				var j = 0;
+				for (key in data) {
+					if (data.hasOwnProperty(key)) {
+						globalChart.data.datasets[0].data[j] = data[key];
+						j += 1;
+					}
+				}
+				$.ajax({
+					url: hisEndpoint + "/port/" + ports[1] + "/containers"
+				}).done(function(data) {
+					portData.push(data);
+					var j = 0;
+					for (key in data) {
+						if (data.hasOwnProperty(key)) {
+							globalChart.data.datasets[1].data[j] = data[key];
+							j += 1;
+						}
+					}
+					globalChart.update();
+				});
 			});
+
 		}
 	});
-
+	var times = [
+		"7-1",
+		"7-8",
+		"7-15",
+		"7-22",
+		"7-29",
+		"8-05",
+		"8-12"
+	];
 	var globalChart = $("#globalChart");
 	var data = {
-		labels: ["20ft", "40ft", "45ft"],
+		labels: times,
 		datasets: [{
-			label: "Max Supply",
-			backgroundColor: [
-				'rgba(255, 99, 132, 0.3)',
-				'rgba(54, 162, 235, 0.3)',
-				'rgba(255, 206, 86, 0.3)'
-			],
-			borderColor: [
-				'rgba(255,99,132,1)',
-				'rgba(54, 162, 235, 1)',
-				'rgba(255, 206, 86, 1)'
-			],
-			borderWidth: 1,
-			data: [0, 0, 0]
+			label: "Port of Los Angeles",
+			fill: false,
+			backgroundColor: "rgba(255,205,86,0.4)",
+			borderColor: "rgba(255,205,86,1)",
+			pointBorderColor: "rgba(255,205,86,1)",
+			pointBackgroundColor: "#fff",
+			pointBorderWidth: 1,
+			pointHoverRadius: 5,
+			pointHoverBackgroundColor: "rgba(255,205,86,1)",
+			pointHoverBorderColor: "rgba(255,205,86,1)",
+			pointHoverBorderWidth: 2,
+			data: [0, 0, 0, 0, 0, 0, 0]
 		}, {
-			label: "Current Supply",
-			backgroundColor: [
-				'rgba(255, 99, 132, 0.6)',
-				'rgba(54, 162, 235, 0.6)',
-				'rgba(255, 206, 86, 0.6)'
-			],
-			borderColor: [
-				'rgba(255,99,132,1)',
-				'rgba(54, 162, 235, 1)',
-				'rgba(255, 206, 86, 1)'
-			],
-			borderWidth: 1,
-			data: [0, 0, 0]
-		}, {
-			label: "Minimum Supply",
-			backgroundColor: [
-				'rgba(255, 99, 132, 1)',
-				'rgba(54, 162, 235, 1)',
-				'rgba(255, 206, 86, 1)'
-			],
-			borderColor: [
-				'rgba(255,99,132,1)',
-				'rgba(54, 162, 235, 1)',
-				'rgba(255, 206, 86, 1)'
-			],
-			borderWidth: 1,
-			data: [0, 0, 0]
+			label: "Port of Hong Kong",
+			fill: false,
+			backgroundColor: "rgba(150,20,90,0.4)",
+			borderColor: "rgba(150,20,90,1)",
+			pointBorderColor: "rgba(150,20,90,1)",
+			pointBackgroundColor: "#fff",
+			pointBorderWidth: 1,
+			pointHoverRadius: 5,
+			pointHoverBackgroundColor: "rgba150,20,90,,1)",
+			pointHoverBorderColor: "rgba(150,20,90,1)",
+			pointHoverBorderWidth: 2,
+			data: [0, 0, 0, 0, 0, 0, 0]
 		}]
-	}
+	};
+	var globalChart = new Chart(globalChart, {
+		type: "line",
+		data: data,
+		options: {
+			title: {
+				display: true,
+				text: 'Containers / Week'
+			},
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: true
+					}
+				}]
+			}
+		}
+	});
 </script>
 
 </html>
