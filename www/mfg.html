@@ -13,29 +13,116 @@
 
 <body>
 	<h1 class="head-title text-uppercase" id="header"> </h1>
+	<h3 id="containerNums"> Container Data for </h3>
+
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="input-group">
 				<span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
+        <button id="searchContainer" class="btn btn-default" type="button">Go!</button>
       </span>
-				<input type="text" class="form-control" placeholder="Search for...">
+				<input id="containerID" type="text" class="form-control" placeholder="Search for...">
 			</div>
 			<!-- /input-group -->
 		</div>
 		<!-- /.col-lg-6 -->
 	</div>
+	<table class="table">
+		<tr class="info">
+			<td> ID </td>
+			<td> Bill of Lading </td>
+			<td> Status </td>
+		</tr>
+		<tr>
+			<td id="id"></td>
+			<td id="bill"></td>
+			<td id="status"></td>
+		</tr>
+		</div>
+	</table>
+	<h3 id="ladingNums"> Lading Data</h3>
+
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="input-group">
+				<span class="input-group-btn">
+        <button id="searchContainer" class="btn btn-default" type="button">Go!</button>
+      </span>
+				<input id="containerID" type="text" class="form-control" placeholder="Search for...">
+			</div>
+			<!-- /input-group -->
+		</div>
+		<!-- /.col-lg-6 -->
+	</div>
+  <table class="table">
+		<tr class="info">
+			<td> ID </td>
+			<td> Estimated Arrival </td>
+		</tr>
+		<tr class="success">
+			<td id="ladID"></td>
+			<td id="ladArrive"></td>
+		</tr>
+		</div>
+	</table>
 </body>
 <script>
+	var containerDump, containerSubset, totalCount;
+	var hisEndpoint = "http://blackfin-hackathon.herokuapp.com";
 	$(document).ready(function() {
 		$("#header").html(localStorage.getItem("auth") + " Inventory data");
 		if (localStorage.getItem("auth") != "walmart") {
 			console.log("NO AUTH")
 			window.location.href = "/noauth.html"
 		}
+		$.ajax({
+			url: hisEndpoint + "/manufacturers/1/containers"
+		}).done(function(data) {
+			containerDump = JSON.parse(data);
+			totalCount = containerDump.length;
+      $('#containerNums').html("Container Data for: " + totalCount + " Containers")
+			console.log("Loaded Containers");
+		})
+		$.ajax({
+			url: hisEndpoint + "/manufacturers/1/billofladings"
+		}).done(function(data) {
+			ladingDump = JSON.parse(data);
+      console.log(ladingDump[0])
+			ladingCount = ladingDump.length;
+      $('#ladingNums').html("Lading Data for: " + ladingCount + " Bills")
+
+			console.log("Loaded Ladings");
+		})
+
+		$("#searchContainer").click(function() {
+			var containerID = $("#containerID").val();
+			console.log(containerID);
+			containerSubset = containerDump.filter(function(v) {
+				if (v.id.search(containerID) != -1) {
+					return true;
+				}
+				return false;
+			});
+			row = containerSubset[0]
+			$("#id").html(row.id)
+			$("#bill").html(row.bill_of_lading)
+			$("#status").html(row.location)
+		})
+		$("#searchLading").click(function() {
+			var ladingID = $("#ladingID").val();
+			ladingSubset = ladingDump.filter(function(v) {
+				if (v.bill_of_lading.search(ladingID) != -1)
+					return true;
+				return false;
+			})
+			row = ladingSubset[0]
+      $("#ladID").html(row.ladID)
+			$("#ladArrive").html(row.arrive)
+		})
 	});
 </script>
 <script>
+	$()
 </script>
 
 </html>
