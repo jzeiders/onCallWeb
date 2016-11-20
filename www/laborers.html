@@ -1,74 +1,99 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="./login.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<meta charset="utf-8">
 	<title>Ports</title>
 </head>
-<body>
-  <h1 id="warning"> Port Authority </h1>
-  <canvas width="50%" , height="25%" id="globalChart"></canvas>
 
+<body>
+	<h1 id="warning"> Port Authority </h1>
+	<canvas width="50%" , height="25%" id="globalChart"></canvas>
 </body>
 <script>
- var ports = []
+	var ports = ["Kobe",
+		"Nagoya",
+		"Hong%20Kong",
+		"Oakland",
+		"Tokyo",
+		"Laem%20Chabang",
+		"Vung%20Tau",
+		"Shimizu",
+		"Xiamen",
+		"Los%20Angeles"
+	];
+	var hisEndpoint = "http://blackfin-hackathon.herokuapp.com";
+
 	$(document).ready(function() {
-    console.log(localStorage.getItem("auth"))
+		console.log(localStorage.getItem("auth"))
 		if (localStorage.getItem("auth") != "labor") {
 			console.log("NO AUTH")
-      window.location.href = "/noauth.html"
+			window.location.href = "/noauth.html"
+		}
+		var portData = [];
+		for (var i = 0; i < ports.length; i++) {
+			console.log("stuff")
+			$.ajax({
+				url: hisEndpoint + "/port/" + ports[i] + "/containers"
+			}).done(function(data) {
+				portData.push(data);
+				console.log(portData)
+			});
 		}
 	});
-  var globalChart = $("#globalChart");
-  var data = {
-    labels: ["20ft", "40ft", "45ft"],
-    datasets: [{
-      label: "Max Supply",
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.3)',
-        'rgba(54, 162, 235, 0.3)',
-        'rgba(255, 206, 86, 0.3)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)'
-      ],
-      borderWidth: 1,
-      data: [0, 0, 0]
-    }, {
-      label: "Current Supply",
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.6)',
-        'rgba(54, 162, 235, 0.6)',
-        'rgba(255, 206, 86, 0.6)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)'
-      ],
-      borderWidth: 1,
-      data: [0, 0, 0]
-    }, {
-      label: "Minimum Supply",
-      backgroundColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)'
-      ],
-      borderWidth: 1,
-      data: [0, 0, 0]
-    }]
-  }
+
+	var globalChart = $("#globalChart");
+	var data = {
+		labels: ["20ft", "40ft", "45ft"],
+		datasets: [{
+			label: "Max Supply",
+			backgroundColor: [
+				'rgba(255, 99, 132, 0.3)',
+				'rgba(54, 162, 235, 0.3)',
+				'rgba(255, 206, 86, 0.3)'
+			],
+			borderColor: [
+				'rgba(255,99,132,1)',
+				'rgba(54, 162, 235, 1)',
+				'rgba(255, 206, 86, 1)'
+			],
+			borderWidth: 1,
+			data: [0, 0, 0]
+		}, {
+			label: "Current Supply",
+			backgroundColor: [
+				'rgba(255, 99, 132, 0.6)',
+				'rgba(54, 162, 235, 0.6)',
+				'rgba(255, 206, 86, 0.6)'
+			],
+			borderColor: [
+				'rgba(255,99,132,1)',
+				'rgba(54, 162, 235, 1)',
+				'rgba(255, 206, 86, 1)'
+			],
+			borderWidth: 1,
+			data: [0, 0, 0]
+		}, {
+			label: "Minimum Supply",
+			backgroundColor: [
+				'rgba(255, 99, 132, 1)',
+				'rgba(54, 162, 235, 1)',
+				'rgba(255, 206, 86, 1)'
+			],
+			borderColor: [
+				'rgba(255,99,132,1)',
+				'rgba(54, 162, 235, 1)',
+				'rgba(255, 206, 86, 1)'
+			],
+			borderWidth: 1,
+			data: [0, 0, 0]
+		}]
+	}
 </script>
+
 </html>

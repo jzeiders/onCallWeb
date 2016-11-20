@@ -46,9 +46,9 @@
 		<div class="col-lg-6">
 			<div class="input-group">
 				<span class="input-group-btn">
-        <button id="searchContainer" class="btn btn-default" type="button">Go!</button>
+        <button id="searchLading" class="btn btn-default" type="button">Go!</button>
       </span>
-				<input id="containerID" type="text" class="form-control" placeholder="Search for...">
+				<input id="ladingID" type="text" class="form-control" placeholder="Search for...">
 			</div>
 			<!-- /input-group -->
 		</div>
@@ -110,14 +110,16 @@
 		})
 		$("#searchLading").click(function() {
 			var ladingID = $("#ladingID").val();
+      console.log(ladingID)
 			ladingSubset = ladingDump.filter(function(v) {
 				if (v.bill_of_lading.search(ladingID) != -1)
 					return true;
 				return false;
 			})
+      console.log(ladingSubset[0])
 			row = ladingSubset[0]
-      $("#ladID").html(row.ladID)
-			$("#ladArrive").html(row.arrive)
+      $("#ladID").html(row.bill_of_lading)
+			$("#ladArrive").html(row.est_arrival)
 		})
 	});
 </script>

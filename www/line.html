@@ -13,25 +13,23 @@
 </head>
 
 <body>
-	<h1>Maersk Data</h1>
+	<h1>Maersk Containers / Week</h1>
 	<canvas width="50%" , height="25%" id="positionChart"></canvas>
 
 </html>
 <script>
-	var ports = ["Kobe",
-		"Nagoya",
-		"Hong Kong",
-		"Oakland",
-		"Tokyo",
-		"Laem Chabang",
-		"Vung Tau",
-		"Shimizu",
-		"Xiamen",
-		"Los Angeles"
+	var times = [
+    "7-1",
+    "7-8",
+    "7-15",
+    "7-22",
+    "7-29",
+    "8-05",
+    "8-12"
 	];
 	var positionChart = $("#positionChart");
 	var data = {
-		labels: ports,
+		labels: times,
 		datasets: [{
 			label: "Max Supply",
 			backgroundColor: [
@@ -45,7 +43,7 @@
 				'rgba(255, 206, 86, 1)'
 			],
 			borderWidth: 1,
-			data: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+			data: [0, 0, 0, 0, 0, 0, 0]
 		}]
 	}
 	var positionChart = new Chart(positionChart, {
@@ -67,10 +65,26 @@
 		}
 	})
 	$(document).ready(function() {
+		var hisEndpoint = "http://blackfin-hackathon.herokuapp.com";
+
 		console.log(localStorage.getItem("auth"))
 		if (localStorage.getItem("auth") != "line") {
 			console.log("NO AUTH")
 			window.location.href = "/noauth.html"
 		}
+		$.ajax({
+			url: hisEndpoint + '/shippingline/Pearl%20Lines/containers'
+		}).done(function(data) {
+      var i =0;
+			for(key in data){
+        console.log(key)
+        if(data.hasOwnProperty(key)){
+          i+=1
+          positionChart.data.datasets[0].data[i] = data[key];
+
+        }
+      }
+      positionChart.update();
+		})
 	});
 </script>
