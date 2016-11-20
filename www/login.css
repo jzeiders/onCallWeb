@@ -60,7 +60,9 @@ body {
   margin-left: 2%;
   margin-right: 2%;
 }
-.mfg-body {
+.main-body {
   padding-top: 20px;
   padding-bottom: 20px;
+  margin-left: 2%;
+  margin-right: 2%;
 }
