@@ -14,7 +14,7 @@
 <body class="main-body">
 	<div class="container">
 		<h1 class="head-title text-uppercase" id="header"> </h1>
-		
+
 		<div class="main-container">
 			<h3 id="containerNums"> Container Data for </h3>
 
@@ -35,11 +35,13 @@
 					<td> Container Number </td>
 					<td> Bill of Lading </td>
 					<td> Shipping Status </td>
+          <td> Destination </td>
 				</tr>
 				<tr>
 					<td id="id"></td>
 					<td id="bill"></td>
 					<td id="status"></td>
+          <td id="dest"></td>
 				</tr>
 				</div>
 			</table>
@@ -57,10 +59,12 @@
 				<tr class="info">
 					<td> Bill of Lading </td>
 					<td> Estimated Arrival </td>
+          <td> Destination </td>
 				</tr>
-				<tr class="success">
+				<tr>
 					<td id="ladID"></td>
 					<td id="ladArrive"></td>
+          <td id="ladDest"></td>
 				</tr>
 				</div>
 			</table>
@@ -108,6 +112,7 @@
 			$("#id").html(row.id)
 			$("#bill").html(row.bill_of_lading)
 			$("#status").html(row.location)
+      $("#dest").html(row.end_location);
 		})
 		$("#searchLading").click(function() {
 			var ladingID = $("#ladingID").val();
@@ -121,6 +126,7 @@
 			row = ladingSubset[0]
       $("#ladID").html(row.bill_of_lading)
 			$("#ladArrive").html(row.est_arrival)
+      $("#ladDest").html(row.end_location)
 		})
 	});
 </script>

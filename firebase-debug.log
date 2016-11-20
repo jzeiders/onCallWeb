@@ -1,0 +1,14 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/Cellar/node/6.2.2/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.0.8
+[debug] Platform:     darwin
+[debug] Node Version: v6.2.2
+[debug] Time:         Sun Nov 20 2016 08:58:19 GMT-0800 (PST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/jzeiders/Code/onCallWeb
+[info] Public Directory: www
+[info] 
+[info] Server listening at: http://localhost:5000
